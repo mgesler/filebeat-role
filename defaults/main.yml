@@ -1,0 +1,6 @@
+---
+# defaults file for filebeat-role
+filebeat_version: "7.10.1"
+filebeat_install_type: remote
+elastic_host: 10.2.29.10
+kibana_host: 0.0.0.0

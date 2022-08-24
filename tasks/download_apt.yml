@@ -1,0 +1,14 @@
+---
+- name: "Download filebeat's deb"
+  get_url:
+    url: "http://10.2.25.120/filebeat-{{ filebeat_version }}-amd64.deb"
+    dest: "files/filebeat-{{ filebeat_version }}-amd64.deb"
+  delegate_to: localhost
+  register: download_filebeat
+  until: download_filebeat is succeeded
+  when: filebeat_install_type == 'remote'
+- name: Copy filebeat's deb to managed node
+  copy:
+    src: "files/filebeat-{{ filebeat_version }}-amd64.deb"
+    mode: 0644
+    dest: "/tmp/filebeat-{{ filebeat_version }}-amd64.deb"

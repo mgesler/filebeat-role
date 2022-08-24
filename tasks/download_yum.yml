@@ -1,0 +1,14 @@
+---
+- name: "Download filebeat's rpm"
+  get_url:
+    url: "http://10.2.25.120/filebeat-{{ filebeat_version }}-x86_64.rpm"
+    dest: "files/filebeat-{{ filebeat_version }}-x86_64.rpm"
+  delegate_to: localhost
+  register: download_filebeat
+  until: download_filebeat is succeeded
+  when: filebeat_install_type == 'remote'
+- name: Copy filebeat's rpm to managed node
+  copy:
+    src: "files/filebeat-{{ filebeat_version }}-x86_64.rpm"
+    mode: 0644
+    dest: "/tmp/filebeat-{{ filebeat_version }}-x86_64.rpm"
